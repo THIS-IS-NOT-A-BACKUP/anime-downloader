@@ -1,10 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Update fork5
+name: Sync Upstream
 
 env:
   UPSTREAM_URL: "https://github.com/anime-dl/anime-downloader.git"
-  DOWNSTREAM_BRANCH: "main"
+  DOWNSTREAM_BRANCH: "master"
 # Controls when the action will run.
 on:
   schedule:
