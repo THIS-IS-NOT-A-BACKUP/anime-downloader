@@ -7,6 +7,7 @@ import click
 import logging
 import sys
 import re
+import os
 
 from anime_downloader import util
 from anime_downloader.__version__ import __version__
@@ -67,15 +68,8 @@ def command(anime_name, new, update_all, _list, quality, remove,
     watcher = _watch.Watcher()
 
     if not os.path.exists(watcher.WATCH_FILE):
-        with open(watcer.WATCH_FILE, "w") as f:
+        with open(watcher.WATCH_FILE, "w") as f:
             f.write("[]")
-
-    with open(watcher.WATCH_FILE, "r") as f:
-            contents = f.read()
-            # print(contents)
-            if "[]" in contents or "[{}]" in contents:
-                logger.error("Add something to the watch list using `anime watch --new`")
-                sys.exit(1)
 
     if new:
         if anime_name:
@@ -87,6 +81,13 @@ def command(anime_name, new, update_all, _list, quality, remove,
 
         watcher.new(url)
         sys.exit(0)
+
+    with open(watcher.WATCH_FILE, "r") as f:
+        contents = f.read()
+        # print(contents)
+        if "[]" in contents:
+            logger.error("Add something to the watch list using `anime watch --new`")
+            sys.exit(1)
 
     if remove:
         anime = watcher.get(anime_name)
